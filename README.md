@@ -4,37 +4,37 @@ A Node Framework For Web Systems.
 **Attention: is under development**
 
 
-# Prerequisites #
+# Requirements #
 
 - [x] **Have node.js / npm installed in your development environment**
 
 
 # First steps #
 
-### Install all dependencies: ###
+Install all dependencies:
 
 ```bash
 npm install
 ```
 
-### Build your application: ###
+Build your application:
 
 ```bash
 gulp build
 ```
 
-### And raise the server: ###
+And raise the server:
 
 ```bash
 npm start
 ```
 
-### During development, compile (in real time) your application running command below and keeping opened: ###
+During development, compile (in real time) your application running command below and keeping opened:
 ```bash
 gulp
 ```
 
-### After create your tests: ###
+After create your tests:
 ```
 npm run test
 ```
@@ -42,9 +42,9 @@ npm run test
 
 # Architecture #
 
-### The architecture is based in MVC, Repository Pattern and some others Project/Programming Patterns. ###
+The architecture is based in MVC, Repository Pattern and some others Project/Programming Patterns.
 
-### After obtaining the project, you will have the following directory tree: ###
+After obtaining the project, you will have the following directory tree:
 
 ```
 ├── tests -> Folder that will have all the test files
@@ -63,12 +63,12 @@ npm run test
         ├── repositories
 ```
 
-### And inside the src folder we have the file `index.ts`, it's the system bootstrap. ###
+And inside the src folder we have the file `index.ts`, it's the system bootstrap.
 
 
 # In development #
 
-### The project has the following sample classes:
+The project has the following sample classes:
 ```
 UserDTO             -> Interface
 User                -> Implementation of UserDTO
@@ -77,7 +77,7 @@ UserService         -> Intermediate class to Controller and Repository
 UserRepositoryRDB   -> Database communication
 ```
 
-### These classes are in their respective folders and referenced in file: `/src/_core/IocContainer.ts` and in some of these others: ###
+These classes are in their respective folders and referenced in file: `/src/_core/IocContainer.ts` and in some of these others:
 
 ```
 /types/ControllerTypes.ts
@@ -85,25 +85,25 @@ UserRepositoryRDB   -> Database communication
 /types/ServiceTypes.ts
 ```
 
-### **Each** controller / service / repository **must be** in these files for dependency injection, via `inversify package`. ###
+**Each** controller / service / repository **must be** in these files for dependency injection, via `inversify package`.
 
 
 # Next implementations #
 
-- [] Abstract controller / service / repository implementation
-- [] Use more and/or better dependencies 
-- [] Class generator by command line, including:
-    - [] Controller
-    - [] Service
-    - [] Repository
-    - [] Configuration in IocContainer
-    - [] Initial tests
-- [] Use more and/or better patterns
-- [] Better tests
-- [] Better function descriptions
+- [ ] Abstract controller / service / repository implementation
+- [ ] Use more and/or better dependencies 
+- [ ] Class generator by command line, including:
+    - [ ] Controller
+    - [ ] Service
+    - [ ] Repository
+    - [ ] Configuration in IocContainer
+    - [ ] Initial tests
+- [ ] Use more and/or better patterns
+- [ ] Better tests
+- [ ] Better function descriptions
 
 ------------
 
 ## Special Thanks: ##
-- [CEFET/Rj - Nova Friburgo](http://www.cefet-rj.br/index.php/nova-friburgo), by knowledge
+- [CEFET/RJ - Nova Friburgo](http://www.cefet-rj.br/index.php/nova-friburgo), by knowledge
 - [Tim Whitney](https://www.linkedin.com/in/timwhit/) for creating this post: **[TYPESCRIPT AND NODE.JS ENTERPRISE PATTERNS](https://www.slalom.com/thinking/typescript-nodejs-enterprise-patterns)**
