@@ -1,5 +1,8 @@
+import { UserRepository } from './UserRepository';
 import { RepositoryRDBCore } from '../_core/repositories/RepositoryRDBCore';
+import { injectable } from 'inversify';
 
-export class UserRepositoryRDB extends RepositoryRDBCore {
+@injectable()
+export class UserRepositoryRDB extends RepositoryRDBCore implements UserRepository {
     
 }

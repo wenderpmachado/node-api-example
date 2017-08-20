@@ -1,3 +1,3 @@
 export const REPOSITORY_TYPES = {
-    UserRepository1: Symbol('UserRepository1')
+    UserRepository: Symbol('UserRepository1')
 };

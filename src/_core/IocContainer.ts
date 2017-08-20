@@ -28,7 +28,7 @@ export class IocContainer {
     }
 
     private static bindRepositories(container: Container): void {
-        container.bind<UserRepositoryRDB>(REPOSITORY_TYPES.UserRepository1).to(UserRepositoryRDB);
+        container.bind<UserRepositoryRDB>(REPOSITORY_TYPES.UserRepository).to(UserRepositoryRDB);
     }
 
     private static bindServices(container: Container): void {

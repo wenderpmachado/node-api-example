@@ -1,23 +1,25 @@
-import { MethodNotImplementedException } from '../exceptions/MethodNotImplementedException';
+import { NotImplementedException } from '../exceptions/NotImplementedException';
 import { Repository } from '../interfaces/Repository';
+import { injectable } from 'inversify';
 
-export class RepositoryRDBCore implements Repository {
+@injectable()
+export abstract class RepositoryRDBCore implements Repository {
     create(body: any) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
     find(...args: any[]) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
     findOne(...args: any[]) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
     findById(...args: any[]) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
     update(...args: any[]) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
     remove(...args: any[]) {
-        throw new MethodNotImplementedException();
+        throw new NotImplementedException();
     }
 }
