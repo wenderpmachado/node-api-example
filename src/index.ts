@@ -1,0 +1,6 @@
+import { App } from './_core/App';
+import { Server } from './_core/Server';
+
+const app = App.getInstance();
+const server = new Server(app);
+server.start();
