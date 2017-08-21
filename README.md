@@ -92,8 +92,9 @@ These classes are in their respective folders and referenced in file: `/src/_cor
 
 - [ ] Abstract implementation
     - [x] Controller
-    - [ ] Service
-    - [ ] Repository
+    - [x] Service
+    - [ ] RepositoryRDB
+    - [ ] RepositoryMongo
 - [ ] Use more and/or better dependencies 
 - [ ] Class generator by command line, including:
     - [ ] Controller
