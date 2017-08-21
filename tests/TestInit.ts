@@ -1,3 +1,5 @@
+import { CONTROLLER_TYPES } from './../src/types/ControllerTypes';
+import { UserController } from './../src/controllers/UserController';
 import { App } from '../src/_core/App';
 import * as mocha from 'mocha';
 import * as chai from 'chai';

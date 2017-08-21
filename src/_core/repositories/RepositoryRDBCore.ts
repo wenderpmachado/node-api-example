@@ -1,6 +1,7 @@
 import { NotImplementedException } from '../exceptions/NotImplementedException';
 import { Repository } from '../interfaces/Repository';
 import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 @injectable()
 export abstract class RepositoryRDBCore implements Repository {

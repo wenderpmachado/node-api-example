@@ -27,11 +27,11 @@ export class IocContainer {
         container.bind<RegistrableController>(CONTROLLER_TYPES.Controller).to(UserController);
     }
 
-    private static bindRepositories(container: Container): void {
-        container.bind<UserRepositoryRDB>(REPOSITORY_TYPES.UserRepository).to(UserRepositoryRDB);
-    }
-
     private static bindServices(container: Container): void {
-        container.bind<UserService>(SERVICE_TYPES.UserService).to(UserService);
+        container.bind<UserService>(SERVICE_TYPES.UserService).to(UserService).whenInjectedInto(UserController);
+    }
+    
+    private static bindRepositories(container: Container): void {
+        container.bind<UserRepositoryRDB>(REPOSITORY_TYPES.UserRepository).to(UserRepositoryRDB).whenInjectedInto(UserService);
     }
 }

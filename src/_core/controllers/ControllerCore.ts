@@ -1,3 +1,4 @@
+import { Service } from './../interfaces/Service';
 import { SERVICE_TYPES } from './../../types/ServiceTypes';
 import { ExpressController } from './../interfaces/ExpressController';
 import { RegistrableController } from './../interfaces/RegistrableController';
@@ -7,39 +8,58 @@ import * as express from 'express';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class ControllerCore<T> implements Controller, RegistrableController, ExpressController {
+export abstract class ControllerCore<M, S extends Service<M>> implements RegistrableController, ExpressController {
     abstract getPrefix(): string;
-    abstract getService(): T;
+    abstract getService(): S;
+    abstract requestToObject(req: express.Request): M;
 
     register(app: express.Application): void {
-        app.route(this.getPrefix()).get(this.find);
+        app.route(this.getPrefix())
+            .get(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const objects: Array<M> = await this.find(req, res, next);
+                this.response(res, objects);
+            })
+            .post(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const id: number = await this.create(req, res, next);
+                this.response(res, id);
+            });
 
-        app.route(this.getPrefix() + ':id').get(this.findById);
-        
-        app.route(this.getPrefix()).post(this.create);
-        
-        app.route(this.getPrefix() + ':id').patch(this.update);
-
-        app.route(this.getPrefix() + ':id').delete(this.remove);
+        app.route(this.getPrefix() + ':id')
+            .get(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const object: M = await this.findById(req, res, next);
+                this.response(res, object);
+            })
+            .patch(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const object: boolean = await this.update(req, res, next);
+                this.response(res, object);
+            })
+            .delete(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const object: boolean = await this.remove(req, res, next);
+                this.response(res, object);
+            });
     };
+
+    response(res: express.Response, obj: any): void {
+        res.json(obj);
+    }
     
-    create(req: any, res: any, next: any) {
-        throw new NotImplementedException();
+    async create(req: express.Request, res: express.Response, next: express.NextFunction) {
+        return await this.getService().create(this.requestToObject(req));
     }
     
-    find(req: any, res: any, next: any) {
-        throw new NotImplementedException();
+    async find(req: express.Request, res: express.Response, next: express.NextFunction) {
+        return await this.getService().find();
     }
 
-    findById(req: any, res: any, next: any) {
-        throw new NotImplementedException();
+    async findById(req: express.Request, res: express.Response, next: express.NextFunction) {
+        return await this.getService().findById(<string> req.params.id);
     }
 
-    update(req: any, res: any, next: any) {
-        throw new NotImplementedException();
+    async update(req: express.Request, res: express.Response, next: express.NextFunction) {
+        return await this.getService().update(this.requestToObject(req));
     }
 
-    remove(req: any, res: any, next: any) {
-        throw new NotImplementedException();
+    async remove(req: express.Request, res: express.Response, next: express.NextFunction) {
+        return await this.getService().remove(<string> req.params.id);
     }
 }

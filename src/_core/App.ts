@@ -36,6 +36,9 @@ export class App {
     }
 
     public static getContainer(): Container {
+        if(!this.container) {
+            this.getInstance();
+        }
         return this.container;
     }
 

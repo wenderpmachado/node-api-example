@@ -4,19 +4,19 @@ import { injectable, inject, decorate } from 'inversify';
 import 'reflect-metadata';
 
 @injectable()
-export abstract class ServiceCore<R, T> implements Service<T> {
+export abstract class ServiceCore<R, M> implements Service<M> {
     abstract getRepository(): R;
 
-    create(object: T) {
+    create(object: M) {
         throw new NotImplementedException();
     }
-    find() {
+    find(): Array<M> {
         throw new NotImplementedException();
     }
-    findById(id: string) {
+    findById(id: string): M {
         throw new NotImplementedException();
     }
-    update(object: T) {
+    update(object: M) {
         throw new NotImplementedException();
     }
     remove(id: string) {
