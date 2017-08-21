@@ -8,7 +8,7 @@ import * as express from 'express';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class ControllerCore<M, S extends Service<M>> implements RegistrableController, ExpressController<M> {
+export abstract class ControllerCore<M, DTO, S extends Service<M, DTO>> implements RegistrableController, ExpressController<M> {
     abstract getPrefix(): string;
     abstract getService(): S;
     abstract requestToObject(req: express.Request): M;
@@ -20,8 +20,8 @@ export abstract class ControllerCore<M, S extends Service<M>> implements Registr
                 this.response(res, objects);
             })
             .post(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
-                const id: number = await this.create(req, res, next);
-                this.response(res, id);
+                const object: M = await this.create(req, res, next);
+                this.response(res, object);
             });
 
         app.route(this.getPrefix() + ':id')
@@ -29,12 +29,12 @@ export abstract class ControllerCore<M, S extends Service<M>> implements Registr
                 const object: M = await this.findById(req, res, next);
                 this.response(res, object);
             })
-            .patch(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
-                const object: boolean = await this.update(req, res, next);
+            .put(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
+                const object: M = await this.update(req, res, next);
                 this.response(res, object);
             })
             .delete(async(req: express.Request, res: express.Response, next: express.NextFunction) => {
-                const object: boolean = await this.remove(req, res, next);
+                const object: M = await this.remove(req, res, next);
                 this.response(res, object);
             });
     };
@@ -43,7 +43,7 @@ export abstract class ControllerCore<M, S extends Service<M>> implements Registr
         res.json(obj);
     }
     
-    async create(req: express.Request, res: express.Response, next: express.NextFunction): Promise<number> {
+    async create(req: express.Request, res: express.Response, next: express.NextFunction): Promise<M> {
         return await this.getService().create(this.requestToObject(req));
     }
     
@@ -55,11 +55,11 @@ export abstract class ControllerCore<M, S extends Service<M>> implements Registr
         return await this.getService().findById(<string> req.params.id);
     }
 
-    async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<boolean> {
+    async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<M> {
         return await this.getService().update(this.requestToObject(req));
     }
 
-    async remove(req: express.Request, res: express.Response, next: express.NextFunction): Promise<boolean> {
-        return await this.getService().remove(<string> req.params.id);
+    async remove(req: express.Request, res: express.Response, next: express.NextFunction): Promise<M> {
+        return await this.getService().remove(this.requestToObject(req));
     }
 }

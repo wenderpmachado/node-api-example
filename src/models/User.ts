@@ -1,8 +1,14 @@
 import { UserDTO } from './UserDTO';
 
-export class User implements UserDTO {
-    id: number;
-    name: string;
+export class User /*implements UserDTO*/ {
+    constructor(private id: number, 
+                private name: string) {}
 
-    constructor(id: number, name: string) {}
+    get getId(): number {
+        return this.id;
+    }
+
+    get getName(): string {
+        return this.name;
+    }
 }

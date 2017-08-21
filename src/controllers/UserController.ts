@@ -1,3 +1,4 @@
+import { UserDTO } from './../models/UserDTO';
 import { CONTROLLER_TYPES } from './../types/ControllerTypes';
 import { App } from './../_core/App';
 import { User } from './../models/User';
@@ -9,7 +10,7 @@ import * as express from 'express';
 import 'reflect-metadata';
 
 @injectable()
-export class UserController extends ControllerCore<User, UserService> {
+export class UserController extends ControllerCore<User, UserDTO, UserService> {
     @inject(SERVICE_TYPES.UserService)
     private userService: UserService;
     private prefix: string = '/user/';

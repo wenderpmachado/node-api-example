@@ -1,3 +1,5 @@
+import { MySQLProvider } from './repositories/MySQLProvider';
+import { PROVIDER_TYPES } from './../types/ProviderTypes';
 import { SERVICE_TYPES } from '../types/ServiceTypes';
 import { UserService } from '../services/UserService';
 import { REPOSITORY_TYPES } from '../types/RepositoryTypes';
@@ -19,6 +21,7 @@ export class IocContainer {
         IocContainer.bindControllers(this.container);
         IocContainer.bindServices(this.container);
         IocContainer.bindRepositories(this.container);
+        IocContainer.bindProviders(this.container);
 
         return this.container;
     }
@@ -33,5 +36,10 @@ export class IocContainer {
     
     private static bindRepositories(container: Container): void {
         container.bind<UserRepositoryRDB>(REPOSITORY_TYPES.UserRepository).to(UserRepositoryRDB).whenInjectedInto(UserService);
+    }
+    
+    private static bindProviders(container: Container): void {
+        container.bind<MySQLProvider>(PROVIDER_TYPES.RDBProvider).to(MySQLProvider);
+        container.bind<MySQLProvider>(PROVIDER_TYPES.MySQLProvider).to(MySQLProvider);
     }
 }

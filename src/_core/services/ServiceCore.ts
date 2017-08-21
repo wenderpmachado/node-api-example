@@ -5,7 +5,7 @@ import { injectable, inject, decorate } from 'inversify';
 import 'reflect-metadata';
 
 @injectable()
-export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements Service<M> {
+export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements Service<M, DTO> {
     abstract getRepository(): R;
     abstract toDTO(object: M): DTO;
     abstract toModel(objectDTO: DTO): M;
@@ -18,8 +18,8 @@ export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements 
         return models;
     }
     
-    async create(object: M): Promise<number> {
-        return await this.getRepository().create(this.toDTO(object));
+    async create(object: M): Promise<M> {
+        return this.toModel(await this.getRepository().create(this.toDTO(object)));
     }
     
     async find(): Promise<Array<M>> {
@@ -30,11 +30,11 @@ export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements 
         return this.toModel(await this.getRepository().findById(id));
     }
     
-    async update(object: M): Promise<boolean> {
-        return await this.getRepository().update(this.toDTO(object));
+    async update(object: M): Promise<M> {
+        return this.toModel(await this.getRepository().update(this.toDTO(object)));
     }
     
-    async remove(id: string): Promise<boolean> {
-        return await this.getRepository().remove(id);
+    async remove(object: M): Promise<M> {
+        return this.toModel(await this.getRepository().remove(this.toDTO(object)));
     }
 }
