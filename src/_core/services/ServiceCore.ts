@@ -23,7 +23,10 @@ export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements 
     }
     
     async find(): Promise<Array<M>> {
-        return this.toModels(await this.getRepository().find());
+        return await this.getRepository().find().then(
+            (dtos) => dtos.map((dto: DTO) => {
+                return this.toModel(dto);
+            }));
     }
     
     async findById(id: string): Promise<M> {

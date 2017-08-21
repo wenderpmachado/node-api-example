@@ -1,6 +1,6 @@
 import { Repository } from '../interfaces/Repository';
 
-export class RepositoryMongoCore implements Repository {
+export class RepositoryMongoCore /*implements Repository*/ {
   constructor(private Schema: any) {
     this.Schema = Schema;
   }

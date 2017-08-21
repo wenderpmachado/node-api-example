@@ -40,6 +40,6 @@ export class IocContainer {
     
     private static bindProviders(container: Container): void {
         container.bind<MySQLProvider>(PROVIDER_TYPES.RDBProvider).to(MySQLProvider);
-        container.bind<MySQLProvider>(PROVIDER_TYPES.MySQLProvider).to(MySQLProvider);
+        // container.bind<MySQLProvider>(PROVIDER_TYPES.MySQLProvider).to(MySQLProvider);
     }
 }

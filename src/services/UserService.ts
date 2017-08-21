@@ -7,8 +7,6 @@ import { User } from './../models/User';
 import { injectable, inject, decorate } from 'inversify';
 import { ServiceCore } from "../_core/services/ServiceCore";
 
-let USERS = require('../models/users.json')
-
 @injectable()
 export class UserService extends ServiceCore<User, UserDTO, UserRepository> {
     @inject(REPOSITORY_TYPES.UserRepository)
@@ -30,9 +28,5 @@ export class UserService extends ServiceCore<User, UserDTO, UserRepository> {
     
     getRepository(): UserRepository {
         return this.userRepository;
-    }
-
-    find() {
-        return USERS;
     }
 }

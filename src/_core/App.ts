@@ -26,7 +26,7 @@ export class App {
             this.middleware();
 
             //configure ioc
-            this.container = IocContainer.getInstance();
+            this.setContainer(IocContainer.getInstance());
 
             //configure routes
             this.routes();
@@ -40,6 +40,10 @@ export class App {
             this.getInstance();
         }
         return this.container;
+    }
+
+    public static setContainer(container: Container) {
+        this.container = container;
     }
 
     // Configure Express middleware.

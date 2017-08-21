@@ -19,7 +19,11 @@ export class MySQLProvider extends Provider {
                 port: 3306,
                 username: "root",
                 password: "root",
-                database: "test"
+                database: "test",
+                entities: [
+                    __dirname + '/../../models/*.js'
+                ],
+                autoSchemaSync: true
             });
         }
         return MySQLProvider.connection;
