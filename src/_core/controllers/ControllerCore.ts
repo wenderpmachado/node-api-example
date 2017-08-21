@@ -8,7 +8,7 @@ import * as express from 'express';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class ControllerCore<M, S extends Service<M>> implements RegistrableController, ExpressController {
+export abstract class ControllerCore<M, S extends Service<M>> implements RegistrableController, ExpressController<M> {
     abstract getPrefix(): string;
     abstract getService(): S;
     abstract requestToObject(req: express.Request): M;
@@ -43,23 +43,23 @@ export abstract class ControllerCore<M, S extends Service<M>> implements Registr
         res.json(obj);
     }
     
-    async create(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async create(req: express.Request, res: express.Response, next: express.NextFunction): Promise<number> {
         return await this.getService().create(this.requestToObject(req));
     }
     
-    async find(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async find(req: express.Request, res: express.Response, next: express.NextFunction): Promise<Array<M>> {
         return await this.getService().find();
     }
 
-    async findById(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async findById(req: express.Request, res: express.Response, next: express.NextFunction): Promise<M> {
         return await this.getService().findById(<string> req.params.id);
     }
 
-    async update(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<boolean> {
         return await this.getService().update(this.requestToObject(req));
     }
 
-    async remove(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async remove(req: express.Request, res: express.Response, next: express.NextFunction): Promise<boolean> {
         return await this.getService().remove(<string> req.params.id);
     }
 }

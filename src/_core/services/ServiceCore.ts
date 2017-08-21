@@ -1,26 +1,40 @@
+import { Repository } from './../interfaces/Repository';
 import { Service } from './../interfaces/Service';
 import { NotImplementedException } from './../exceptions/NotImplementedException';
 import { injectable, inject, decorate } from 'inversify';
 import 'reflect-metadata';
 
 @injectable()
-export abstract class ServiceCore<R, M> implements Service<M> {
+export abstract class ServiceCore<M, DTO, R extends Repository<DTO>> implements Service<M> {
     abstract getRepository(): R;
+    abstract toDTO(object: M): DTO;
+    abstract toModel(objectDTO: DTO): M;
 
-    create(object: M) {
-        throw new NotImplementedException();
+    toModels(DTOs: Array<DTO>): Array<M> {
+        let models: Array<M>;
+        DTOs.forEach(dto => {
+            models.push(this.toModel(dto));
+        });
+        return models;
     }
-    find(): Array<M> {
-        throw new NotImplementedException();
+    
+    async create(object: M): Promise<number> {
+        return await this.getRepository().create(this.toDTO(object));
     }
-    findById(id: string): M {
-        throw new NotImplementedException();
+    
+    async find(): Promise<Array<M>> {
+        return this.toModels(await this.getRepository().find());
     }
-    update(object: M) {
-        throw new NotImplementedException();
+    
+    async findById(id: string): Promise<M> {
+        return this.toModel(await this.getRepository().findById(id));
     }
-    remove(id: string) {
-        throw new NotImplementedException();
+    
+    async update(object: M): Promise<boolean> {
+        return await this.getRepository().update(this.toDTO(object));
     }
-
+    
+    async remove(id: string): Promise<boolean> {
+        return await this.getRepository().remove(id);
+    }
 }
