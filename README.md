@@ -90,7 +90,10 @@ These classes are in their respective folders and referenced in file: `/src/_cor
 
 # Next implementations #
 
-- [ ] Abstract controller / service / repository implementation
+- [ ] Abstract implementation
+    - [x] Controller
+    - [ ] Service
+    - [ ] Repository
 - [ ] Use more and/or better dependencies 
 - [ ] Class generator by command line, including:
     - [ ] Controller
