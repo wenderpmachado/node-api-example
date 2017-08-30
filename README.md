@@ -1,5 +1,5 @@
 # nodework
-A Node Framework For Web Systems.
+A Node API Example For Web Systems.
 
 **Attention: is under development**
 
