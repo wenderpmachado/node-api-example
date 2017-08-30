@@ -1,5 +1,4 @@
-# nodework
-A Node API Example For Web Systems.
+# Node API Example, for Web Systems
 
 **Attention: is under development**
 
